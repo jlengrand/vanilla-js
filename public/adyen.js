@@ -1,9 +1,24 @@
-import  AdyenCheckout  from '@adyen/adyen-web';
-// import '@adyen/adyen-web/dist/adyen.css';
+import AdyenCheckout from '@adyen/adyen-web';
+import '@adyen/adyen-web/dist/adyen.css';
+
+async function callServer(url, data) {
+    const res = await fetch(url, {
+      method: "POST",
+      body: data ? JSON.stringify(data) : "",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  
+    return await res.json();
+  }
+
+const checkoutSessionResponse = await callServer("/api/sessions");
 
 const configuration = {
-    environment: 'test', // Change to 'live' for the live environment.
-    clientKey: 'test_LETB6D7TMZCIZFSNMDRGMEPJ3UVB2TYP', // Public key used for client-side authentication: https://docs.adyen.com/development-resources/client-side-authentication
+    environment: 'test',
+    clientKey: 'test_LETB6D7TMZCIZFSNMDRGMEPJ3UVB2TYP', 
+    session: checkoutSessionResponse,
     onPaymentCompleted: (result, component) => {
         console.info(result, component);
     },

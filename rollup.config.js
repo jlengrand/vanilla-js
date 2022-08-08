@@ -1,7 +1,7 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
-// import css from "rollup-plugin-import-css";
 import commonjs from '@rollup/plugin-commonjs';
+import postcss from 'rollup-plugin-postcss'
 
 export default {
     input: 'public/adyen.js',
@@ -9,10 +9,9 @@ export default {
         dir: 'public/dist',
         format: 'es'
     },
+    preserveEntrySignatures: false,
+
     plugins: [    
-        nodeResolve(),
-        // css(),
-        // commonjs(),
         babel({
             presets: [
               [
@@ -30,5 +29,12 @@ export default {
               ],
             ]
           }),
+
+        nodeResolve(),
+        commonjs(),
+        postcss({
+          plugins: []
+        }),
+        run()
       ],
   };
