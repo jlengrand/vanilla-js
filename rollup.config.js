@@ -29,12 +29,10 @@ export default {
               ],
             ]
           }),
-
         nodeResolve(),
         commonjs(),
         postcss({
           plugins: []
-        }),
-        run()
+        })
       ],
   };
